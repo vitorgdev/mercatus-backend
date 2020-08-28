@@ -1,6 +1,4 @@
 const { User } = require("../models");
-var cfg = require("../../config/jwt");
-var jwt = require("jsonwebtoken");
 
 class UserController {
   async index(req, res) {
@@ -8,7 +6,7 @@ class UserController {
       const users = await User.findAll();
       return res.json(users);
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      next(err)
     }
   }
 
@@ -18,7 +16,7 @@ class UserController {
 
       return res.json(user);
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      next(err)
     }
   }
 
@@ -40,7 +38,7 @@ class UserController {
 
       return res.json({ user });
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      next(err)
     }
   }
 
@@ -52,7 +50,7 @@ class UserController {
 
       return res.json();
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      next(err)
     }
   }
 }

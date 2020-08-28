@@ -5,13 +5,15 @@ const auth = require("../config/passport")();
 
 const routes = Router();
 
-routes.get("/users", auth.authenticate("jwt"), UserController.index);
-routes.get("/users/:id", UserController.show);
-routes.post("/users", UserController.store);
-routes.put("/users/:id", UserController.update);
-routes.delete("/users/:id", UserController.destroy);
+routes.get("/", (req, res) => {
+  return res.json({
+    apiName: "Mercatus",
+    serviceVersion: "v1",
+  });
+});
 
-routes.post("/login", AuthController.login);
-routes.get("/checkToken", AuthController.checkToken);
+routes.use("/users", require("./modules/users"));
+routes.use("/profiles", require("./modules/profiles"));
+routes.use("/auth", require("./modules/auth"));
 
 module.exports = routes;
