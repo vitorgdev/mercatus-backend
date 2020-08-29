@@ -12,7 +12,8 @@ const handleError = (err, res) => {
   } else if (err.hasOwnProperty("errors")) {
     var { statusCode, message } = validationError(err);
   } else {
-    var { statusCode, message } = err;
+    var statusCode = 500;
+    var message = err.message;
   }
   res.status(statusCode).json({
     status: "error",
@@ -22,12 +23,14 @@ const handleError = (err, res) => {
 };
 
 const dbError = (err) => {
-  switch (err.parent.code) {
+  console.log(err.parent.code);
+  switch ("err.parent.code") {
     case "ER_NO_DEFAULT_FOR_FIELD":
       return { statusCode: 406, message: err.message };
       break;
 
     default:
+      return { statusCode: 500, message: err.message };
       break;
   }
 };

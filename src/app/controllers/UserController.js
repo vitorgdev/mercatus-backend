@@ -1,56 +1,49 @@
-const { Profile, User, ProfileFeatureAction } = require("../models");
+const { User } = require("../models");
+const UserService = require("../services/UserService");
 
 class UserController {
   async index(req, res, next) {
     try {
-      const users = await User.findAll({ include: [{model: Profile, include: [{model: ProfileFeatureAction}]}] });
+      const users = await new UserService(User).index();
       return res.json(users);
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 
-  async show(req, res) {
+  async show(req, res, next) {
     try {
-      const user = await User.findByPk(req.params.id);
-
+      const user = await new UserService(User).show(req.params.id);
       return res.json(user);
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 
   async store(req, res, next) {
     try {
-      const user = await User.create(req.body);
-
+      const user = await new UserService(User).store(req.body);
       return res.json(user);
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 
-  async update(req, res) {
+  async update(req, res, next) {
     try {
-      const user = await User.findByPk(req.params.id);
-
-      await user.update(req.body);
-
-      return res.json({ user });
+      const user = await new UserService(User).update(req.params.id, req.body);
+      return res.json(user);
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 
   async destroy(req, res) {
     try {
-      const user = await User.findByPk(req.params.id);
-
-      await user.destroy();
-
-      return res.json();
+      await new UserService(User).destroy(req.params.id, req.body);
+      return res.status(204).json();
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 }
