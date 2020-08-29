@@ -1,6 +1,16 @@
+("use strict");
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define(
-    "User",
+  class User extends Model {
+    static associate(models) {
+      this.belongsToMany(models.Profile, {
+        through: models.UserProfile,
+        foreignKey: "userId",
+      });
+      models.Profile.hasMany(models.ProfileFeatureAction);
+    }
+  }
+  User.init(
     {
       name: DataTypes.STRING,
       email: {
@@ -23,10 +33,11 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
+      sequelize,
+      modelName: "User",
       freezeTableName: true,
       underscored: false,
     }
   );
-
   return User;
 };

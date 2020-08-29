@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   ProfileFeatureAction.init({
-    profile_id: DataTypes.INTEGER,
-    action_id: DataTypes.INTEGER,
-    feature_id: DataTypes.INTEGER
+    profileId: DataTypes.INTEGER,
+    actionId: DataTypes.INTEGER,
+    featureId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'ProfileFeatureAction',

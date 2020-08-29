@@ -1,9 +1,9 @@
-const { Profile, User } = require("../models");
+const { Profile, User, ProfileFeatureAction } = require("../models");
 
 class ProfileController {
   async index(req, res, next) {
     try {
-      const profiles = await Profile.findAll({ include: User });
+      const profiles = await Profile.findAll({ include: [User, ProfileFeatureAction] });
       return res.json(profiles);
     } catch (err) {
       next(err);

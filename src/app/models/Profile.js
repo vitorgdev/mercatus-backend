@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsToMany(models.User, { through: models.UserProfile, foreignKey: 'profileId' });
+      this.hasMany(models.ProfileFeatureAction);
     }
   }
   Profile.init(
