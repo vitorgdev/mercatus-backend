@@ -7,6 +7,11 @@ class UserService extends Service {
     const users = new UserRepository().findAllWithProfileFeatureAction();
     return users;
   }
+
+  async associateUserToRole(id, roleId) {
+    const userCreated = new UserRepository().associateUserToRole(id, roleId);
+    return userCreated;
+  }
 }
 
 module.exports = UserService;

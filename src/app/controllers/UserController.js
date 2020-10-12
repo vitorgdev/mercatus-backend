@@ -38,10 +38,22 @@ class UserController {
     }
   }
 
-  async destroy(req, res) {
+  async destroy(req, res, next) {
     try {
       await new UserService(User).destroy(req.params.id, req.body);
       return res.status(204).json();
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async associateUserToRole(req, res, next) {
+    try {
+      const user = await new UserService(User).associateUserToRole(
+        req.params.id,
+        req.params.roleId
+      );
+      return res.json(user);
     } catch (err) {
       next(err);
     }

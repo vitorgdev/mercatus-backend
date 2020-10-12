@@ -5,10 +5,11 @@ const auth = require("../../config/passport")();
 
 const routes = Router();
 
-routes.get("/", auth.authenticate("jwt"), UserController.index);
+routes.get("/", UserController.index);
 routes.get("/:id", UserController.show);
 routes.post("/", UserController.store);
 routes.put("/:id", UserController.update);
 routes.delete("/:id", UserController.destroy);
+routes.post("/:id/roles/:roleId", UserController.associateUserToRole);
 
 module.exports = routes;
